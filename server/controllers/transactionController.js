@@ -33,7 +33,32 @@ const createTransaction = async (req, res) => {
     relatedProperty.stocks -= 1;
     await relatedProperty.save();
 
-    res.status(201).json({ msg: "Pembayaran berhasil", transaction: newTransaction });
+    res
+      .status(201)
+      .json({ msg: "Pembayaran berhasil", transaction: newTransaction });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Kesalahan server");
+  }
+};
+
+const getTransactionByUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const transactions = await Transaction.find().populate({
+      path: "booking",
+      match: { user: userId },
+      populate: {
+        path: "property",
+        model: "Property",
+      },
+    });
+    // Filter out transactions where booking is null due to match
+    const userTransactions = transactions.filter(
+      (transaction) => transaction.booking !== null
+    );
+
+    res.status(200).json(userTransactions);    
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Kesalahan server");
@@ -42,4 +67,5 @@ const createTransaction = async (req, res) => {
 
 module.exports = {
   createTransaction,
+  getTransactionByUser,
 };

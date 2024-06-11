@@ -5,4 +5,6 @@ const transactionController = require("../controllers").transaction;
 
 router.post("/add", verifyToken, transactionController.createTransaction);
 
+router.get("/user", verifyToken, transactionController.getTransactionByUser);
+
 module.exports = router;
