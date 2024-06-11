@@ -324,17 +324,23 @@ const deletePropertyById = async (req, res) => {
       return res.status(404).json({ msg: "Properti tidak ditemukan" });
     }
 
-    // Hapus gambar dari folder
-    property.images.forEach(imagePath => {
-      const filePath = path.join(__dirname, '..', 'public', 'images', 'property', path.basename(imagePath));
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    });
+    // Mengecek apakah setidaknya satu gambar bukan default.jpg
+    const isNotDefaultImage = property.images.some(imagePath => !imagePath.includes("default.jpg"));
 
-    await Property.findByIdAndDelete(id);
-
-    res.status(200).json({ msg: "Properti berhasil dihapus" });
+    // Jika ada setidaknya satu gambar bukan default.jpg, hapus properti dan gambarnya
+    if (isNotDefaultImage) {
+      property.images.forEach(imagePath => {
+        const filePath = path.join(__dirname, '..', 'public', 'images', 'property', path.basename(imagePath));
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      });
+      await Property.findByIdAndDelete(id);
+      return res.status(200).json({ msg: "Properti berhasil dihapus" });
+    } else { // Jika semua gambar adalah default.jpg, hanya hapus properti
+      await Property.findByIdAndDelete(id);
+      return res.status(200).json({ msg: "Properti berhasil dihapus" });
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Kesalahan server");
