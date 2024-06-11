@@ -10,6 +10,7 @@ import Editproperty from "./pages/editproperty";
 import Propertydetail from "./pages/propertydetail";
 import Booking from "./pages/booking";
 import Bookingbayar from "./pages/bookingbayar";
+import Transaksi from "./pages/transaksi";
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/home" element={<Homepenyewa/>}/>
           <Route path="/booking" element={<Booking/>}/>
           <Route path="/booking/konfirmasi/:id" element={<Bookingbayar/>}/>
+          <Route path="/transaksi" element={<Transaksi/>}/>
           <Route path="/property/detail/:id" element={<Propertydetail/>}/>
           <Route path="/myprofile" element={<Myprofile/>}/>
           <Route path="/admin" element={<Admin/>}/>

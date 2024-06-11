@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import Navbarpenyewa from "../components/navbarpenyewa";
 
 const Myprofile = () => {
@@ -20,9 +19,7 @@ const Myprofile = () => {
     fullname: "",
     email: "",
     no_phone: "",
-  });
-
-  const navigate = useNavigate();
+  });  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -123,6 +120,7 @@ const Myprofile = () => {
       setProfileImage(decoded.img_url);
       alert("Data berhasil diupdate");
       setShowUpdateForm(false);
+      window.location.reload();
     } catch (err) {
       console.error(err);
       if (err.response && err.response.data && err.response.data.errors) {
