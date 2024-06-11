@@ -12,4 +12,5 @@ module.exports = {
   property,
   transaction,
   booking,
+  transaction
 };

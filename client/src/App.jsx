@@ -9,6 +9,7 @@ import Tambahproperti from "./pages/tambahproperti";
 import Editproperty from "./pages/editproperty";
 import Propertydetail from "./pages/propertydetail";
 import Booking from "./pages/booking";
+import Bookingbayar from "./pages/bookingbayar";
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/home" element={<Homepenyewa/>}/>
           <Route path="/booking" element={<Booking/>}/>
+          <Route path="/booking/konfirmasi/:id" element={<Bookingbayar/>}/>
           <Route path="/property/detail/:id" element={<Propertydetail/>}/>
           <Route path="/myprofile" element={<Myprofile/>}/>
           <Route path="/admin" element={<Admin/>}/>

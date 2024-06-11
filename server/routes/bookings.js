@@ -8,6 +8,10 @@ router.get("/", verifyToken, bookingController.getAllBookings);
 
 router.get("/user", verifyToken, bookingController.getBookingsByUser);
 
+router.get("/:id", verifyToken, bookingController.getBookingById);
+
+router.delete("/delete/:id", verifyToken, bookingController.deleteBookingsById);
+
 router.post(
   "/add/:property",
   [

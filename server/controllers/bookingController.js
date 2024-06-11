@@ -56,8 +56,43 @@ const getBookingsByUser = async (req, res) => {
   }
 };
 
+const deleteBookingsById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const bookings = await Booking.findById(id);
+
+    if (!bookings) {
+      return res.status(404).json({ msg: "Bookings tidak ditemukan" });
+    }    
+
+    await Booking.findByIdAndDelete(id);
+
+    res.status(200).json({ msg: "Bookings berhasil dihapus" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Kesalahan server");
+  }
+};
+
+const getBookingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const bookings = await Booking.findById(id).populate("property").populate("user");
+
+    if (!bookings) {
+      return res.status(404).json({ msg: "Booking tidak ditemukan" });
+    }
+    res.status(200).json(bookings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Kesalahan server");
+  }
+};
+
 module.exports = {
   getAllBookings,
   addBooking,
-  getBookingsByUser
+  getBookingsByUser,
+  getBookingById,
+  deleteBookingsById
 };

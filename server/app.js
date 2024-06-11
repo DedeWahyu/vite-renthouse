@@ -15,6 +15,7 @@ const propertiesRouter = require("./routes/properties");
 const loginRoutes = require("./routes/login");
 const registerRoutes = require("./routes/register");
 const bookingsRouter = require("./routes/bookings");
+const transactionsRouter = require("./routes/transactions");
 
 // Define Express
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/properties", propertiesRouter);
 app.use("/api/login", loginRoutes);
 app.use("/api/register", registerRoutes);
 app.use("/api/bookings", bookingsRouter);
+app.use("/api/transactions", transactionsRouter);
 
 // Handling Invalid Route
 app.use(function (req, res, next) {
